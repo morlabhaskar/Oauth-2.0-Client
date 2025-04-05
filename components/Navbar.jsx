@@ -1,23 +1,26 @@
 import React, { useContext } from 'react'
-import { assets } from '../src/assets/assets'
+// import { assets } from '../src/assets/assets'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { IoIosArrowDown } from "react-icons/io";
+import { BsCheckCircleFill  } from "react-icons/bs";
+import { CiLogin } from "react-icons/ci";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { userData,backendUrl,setUserData,setIsLoggedin } = useContext(AppContext)
+  const { userData, backendUrl, setUserData, setIsLoggedin } = useContext(AppContext)
 
   const sendVerificationOtp = async () => {
     try {
       axios.defaults.withCredentials = true;
-      const {data} = await axios.post(backendUrl + '/api/auth/send-verify-otp')
-      if(data.success){
+      const { data } = await axios.post(backendUrl + '/api/auth/send-verify-otp')
+      if (data.success) {
         navigate('/email-verify')
         toast.success(data.message)
       }
-      else{
+      else {
         toast.error(data.message)
       }
     } catch (error) {
@@ -29,8 +32,8 @@ const Navbar = () => {
   const logoutHandler = async () => {
     try {
       axios.defaults.withCredentials = true;
-      const {data} = await axios.post(backendUrl + '/api/auth/logout')
-      if(data.success){
+      const { data } = await axios.post(backendUrl + '/api/auth/logout')
+      if (data.success) {
         setIsLoggedin(false)
         setUserData(null)
         navigate('/login')
@@ -41,27 +44,32 @@ const Navbar = () => {
     }
   }
 
-  
+
 
   return (
-    <div className='bg-red-200 flex justify-between items-center p-4'>
-      <img src={assets.logo} alt="" className='w-2xl sm:w-14' />
-      {userData 
-      ?<div className='border-[1px] border-black py-2 px-4 rounded-full relative group'>
-        {userData.name[0].toUpperCase()}
-        <div className='absolute flex-col min-w-[100px] hidden group-hover:block top-0 right-0 z-10 rounded pt-14'>
-          <ul className='bg-white'>
-            {userData.isAccountVerified ? <li>Email Verified</li> : <li onClick={sendVerificationOtp} className='cursor-pointer'>Verify Email</li>}
-            {/* {!userData.isAccountVerified && <li onClick={sendVerificationOtp}>Verify Email</li>} */}
-            
-            <li className='cursor-pointer' onClick={logoutHandler}>Logout</li>
-          </ul>
+    <div className='flex justify-between items-center py-4 px-8 border-b-[3px] border-black'>
+      <h1 className="self-center md:text-2xl text-lg font-semibold whitespace-nowrap bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent">oAuth</h1>
+      {userData
+        ? <div className='flex items-center gap-1 cursor-pointer'>
+          <div className='bg-slate-800 text-white font-bold py-1 px-2.5 rounded-full relative group'>
+            {userData.name[0].toUpperCase()}
+            <div className='absolute flex-col text-black font-medium text-md min-w-[147px] hidden group-hover:block top-0 -right-8 z-10 rounded pt-14'>
+              <ul className='bg-slate-300 rounded-md flex flex-col gap-1 justify-center'>
+                {userData.isAccountVerified ? <li className='px-3 py-1 flex items-center gap-2'><span>Email Verified</span> <BsCheckCircleFill  className='text-green-600 font-bold'/></li> : <li onClick={sendVerificationOtp} className='cursor-pointer hover:bg-slate-400 px-3 py-1 rounded-tl-md rounded-tr-md'>Verify Email</li>}
+                <li className='cursor-pointer hover:bg-slate-400 px-3 py-1' onClick={() => navigate('/reset-password')}>Reset Password</li>
+                <li className='cursor-pointer hover:bg-slate-400 px-3 py-1 rounded-bl-md rounded-br-md' onClick={logoutHandler}>Logout</li>
+              </ul>
+            </div>
+
+          </div>
+          <IoIosArrowDown className='font-bold' />
         </div>
-      </div>
-      :<button onClick={() => navigate('/login')} className='cursor-pointer'>Login</button>
+        : <button onClick={() => navigate('/login')} className='cursor-pointer flex items-center gap-1 border-black border-[1px] px-4 py-1 rounded-full hover:bg-slate-200 hover:scale-105 transition-all duration-300'><span>Login</span><CiLogin className='text-black font-bold'/></button>
       }
     </div>
   )
 }
 
 export default Navbar
+
+// hidden group-hover:block

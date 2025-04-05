@@ -1,13 +1,24 @@
 import React, { useContext } from 'react'
 import { assets } from '../src/assets/assets'
 import { AppContext } from '../context/AppContext'
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
-  const {userData} = useContext(AppContext)
+  const { userData } = useContext(AppContext);
+  const navigate = useNavigate()
   return (
-    <div className='bg-red-100'>
-        <img src={assets.header_img} alt="" className='w-lg'/>
-        <h1>Hey {userData ? userData.name :"Developer"} <img src={assets.hand_wave} alt="" /></h1>
+    <div className='min-h-[91vh] flex flex-col items-center'>
+      <div className='flex flex-col justify-center items-center mt-10'>
+        <div className='flex flex-col justify-center items-center'>
+          <img src={assets.header_img} alt="" className='w-md' />
+          <h1 className='flex gap-2 mt-4'><span>Hey {userData ? userData.name : "Developer"}</span> <img className='w-6' src={assets.hand_wave} alt="" /></h1>
+        </div>
+        <div className="flex flex-col items-center mt-4 gap-2 ">
+          <h1 className='text-xl font-semibold'>Welcome to Our Platform!</h1>
+          <p className='text-sm'>Join us today and explore amazing features tailored just for you. Creating an account is easy and takes less than a minute.</p>
+          <button onClick={()=>navigate('/login')} className='bg-gradient-to-br from-blue-600 via-purple-500 to-red-600 px-4 py-2 rounded-full text-white mt-4 hover:scale-105 transition-all duration-300 cursor-pointer'>Get Started</button>
+        </div>
+      </div>
     </div>
   )
 }
