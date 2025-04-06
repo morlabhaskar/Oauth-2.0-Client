@@ -9,7 +9,8 @@ export const AppContextProvider = (props) => {
 
     axios.defaults.withCredentials = true;
 
-    const backendUrl = import.meta.env.BACKEND_URL || 'http://localhost:4000'
+    // const backendUrl = import.meta.env.BACKEND_URL || 'http://localhost:4000'
+    const backendUrl = import.meta.env.BACKEND_URL || 'https://oauth-server-2025.vercel.app'
     const [isLoggedin, setIsLoggedin] = useState(false)
     const [userData,setUserData] = useState(false)
 
