@@ -23,6 +23,15 @@ const Login = () => {
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
 
+  const [passwordStrength, setPasswordStrength] = useState('')
+
+  const evalPasswordStrength = (password) => {
+    if (password.length === 0) return "";
+    if (password.length <= 3) return "Weak";
+    if (password.length <= 5) return "Medium";
+    if (password.length >= 6) return "Strong";
+  }
+
   const submitHandler = async (e) => {
     try {
 
@@ -77,34 +86,52 @@ const Login = () => {
 
         <form onSubmit={submitHandler}>
           {state === 'Sign Up' && (
-            <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-zinc-700'>
+            <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full border-[2px] border-zinc-800'>
               <img src={assets.person_icon} alt="" className='w-3 h-3' />
-              <input type="text" className='bg-transparent outline-none text-white' placeholder='Full Name' onChange={e => setName(e.target.value)} value={name} required />
+              <input type="text" className='bg-transparent outline-none text-black' placeholder='Full Name' onChange={e => setName(e.target.value)} value={name} required />
             </div>
           )}
 
 
-          <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-zinc-700'>
+          <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full border-[2px] border-zinc-800'>
             <img src={assets.mail_icon} alt="" />
-            <input type="email" placeholder='Email' className='bg-transparent outline-none text-white' onChange={e => setEmail(e.target.value)} value={email} required />
+            <input type="email" placeholder='Email' className='bg-transparent outline-none text-black' onChange={e => setEmail(e.target.value)} value={email} required />
           </div>
 
-          <div className='mb-2 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-zinc-700'>
+          <div className='mb-2 flex items-center gap-3 w-full px-5 py-2.5 rounded-full border-[2px] border-zinc-800'>
             <img src={assets.lock_icon} alt="" />
-            <input type="password" placeholder='Password' className='bg-transparent outline-none text-white' onChange={e => setPassword(e.target.value)} value={password} required />
+            <input type="password" placeholder='Password' className='bg-transparent outline-none text-black'
+              onChange={e => {
+                setPassword(e.target.value);
+                setPasswordStrength(evalPasswordStrength(e.target.value));
+              }}
+              value={password}
+              required />
+
           </div>
 
-          <p className='text-sm text-red-500 cursor-pointer' onClick={() => navigate('/reset-password')}>Forgot Password?</p>
+
+          <div className='flex justify-between items-center'>
+            <p className='text-sm text-red-500 cursor-pointer' onClick={() => navigate('/reset-password')}>Forgot Password?</p>
+            {password && (
+              <p className={`text-sm ${passwordStrength === 'Weak' ? 'text-red-500' :
+                passwordStrength === 'Medium' ? 'text-yellow-400' :
+                  'text-green-500'
+                }`}>
+                {passwordStrength}
+              </p>
+            )}
+          </div>
 
           <button className='text-ms text-center w-full bg-teal-800 text-white py-2 my-2 rounded-full cursor-pointer hover:scale-105 transition-all duration-400'>
-            {loading 
-            ? <p className='flex items-center gap-2 justify-center'><span>Loading</span>
-            <DotWave
-            size="30"
-            speed="2"
-            color="white"/> 
-            </p>
-            : state === 'Sign Up' ? 'Sign Up' : 'Login'}
+            {loading
+              ? <p className='flex items-center gap-2 justify-center'><span>Loading</span>
+                <DotWave
+                  size="30"
+                  speed="2"
+                  color="white" />
+              </p>
+              : state === 'Sign Up' ? 'Sign Up' : 'Login'}
           </button>
 
         </form>

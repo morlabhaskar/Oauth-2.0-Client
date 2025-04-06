@@ -55,7 +55,8 @@ const Navbar = () => {
             {userData.name[0].toUpperCase()}
             <div className='absolute flex-col text-black font-medium text-md min-w-[147px] hidden group-hover:block top-0 -right-8 z-10 rounded pt-14'>
               <ul className='bg-slate-300 rounded-md flex flex-col gap-1 justify-center'>
-                {userData.isAccountVerified ? <li className='px-3 py-1 flex items-center gap-2'><span>Email Verified</span> <BsCheckCircleFill  className='text-green-600 font-bold'/></li> : <li onClick={sendVerificationOtp} className='cursor-pointer hover:bg-slate-400 px-3 py-1 rounded-tl-md rounded-tr-md'>Verify Email</li>}
+              <li className='cursor-pointer hover:bg-slate-400 px-3 py-1 rounded-tl-md rounded-tr-md' onClick={() => navigate('/profile')}>Profile</li>
+                {userData.isAccountVerified ? <li className='px-3 py-1 flex items-center gap-2'><span>Email Verified</span> <BsCheckCircleFill  className='text-green-600 font-bold'/></li> : <li onClick={sendVerificationOtp} className='cursor-pointer hover:bg-slate-400 px-3 py-1 '>Verify Email</li>}
                 <li className='cursor-pointer hover:bg-slate-400 px-3 py-1' onClick={() => navigate('/reset-password')}>Reset Password</li>
                 <li className='cursor-pointer hover:bg-slate-400 px-3 py-1 rounded-bl-md rounded-br-md' onClick={logoutHandler}>Logout</li>
               </ul>
