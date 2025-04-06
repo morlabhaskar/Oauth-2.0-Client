@@ -79,7 +79,7 @@ const EmailVerify = () => {
         <div className='flex justify-between mb-8' onPaste={handlePaste}>
         {Array(6).fill(0).map((_,index)=>(
           <input key={index} type="text" 
-          className='w-12 h-12 text-white bg-[#333A5C] text-center text-xl rounded-md' 
+          className='w-12 h-12 text-black bg-[#e9ebf4] text-center text-xl rounded-md border border-gray-300 focus:outline focus:outline-2 focus:outline-blue-500' 
           maxLength={1} 
           ref={e => inputRefs.current[index] = e}
           onInput = {(e) => handleInput(e,index)}

@@ -22,6 +22,15 @@ const ResetPassword = () => {
   const [isOtpSent, setIsOtpSent] = useState(false)
   const [loading, setLoading] = useState(false)
 
+   const [passwordStrength, setPasswordStrength] = useState('')
+  
+    const evalPasswordStrength = (password) => {
+      if (password.length === 0) return "";
+      if (password.length <= 3) return "Weak";
+      if (password.length <= 5) return "Medium";
+      if (password.length >= 6) return "Strong";
+    }
+
   const inputRefs = React.useRef([])
 
   const handleInput = (e, index) => {
@@ -116,10 +125,10 @@ const ResetPassword = () => {
         <form onSubmit={onSubmitEmail} className='bg-transparent border-[3px] border-zinc-800 shadow-2xl p-8 rounded-2xl w-96 text-sm'>
           <h1 className='text-zinc-800 text-2xl font-semibold text-center mb-4'>Reset Password</h1>
           <p className='text-center mb-6 text-indigo-800'>Enter your registered email address</p>
-          <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-zinc-600'>
+          <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full border-[2px] border-zinc-800 bg-white'>
             <img src={assets.mail_icon} alt="" className='w-3 h-3' />
             <input type="email" placeholder='Email'
-              className='bg-transparent outline-none text-white'
+              className='bg-transparent outline-none text-black'
               value={email}
               onChange={e => setEmail(e.target.value)} required
             />
@@ -143,7 +152,7 @@ const ResetPassword = () => {
           <div className='flex justify-between mb-8' onPaste={handlePaste}>
             {Array(6).fill(0).map((_, index) => (
               <input key={index} type="text"
-                className='w-12 h-12 text-white bg-[#333A5C] text-center text-xl rounded-md'
+                className='w-12 h-12 text-black bg-[#e9ebf4] text-center text-xl rounded-md border border-gray-300 focus:outline focus:outline-2 focus:outline-blue-500'
                 maxLength={1}
                 ref={e => inputRefs.current[index] = e}
                 onInput={(e) => handleInput(e, index)}
@@ -167,14 +176,27 @@ const ResetPassword = () => {
         <form onSubmit={onSubmitNewPassword} className='bg-transparent border-[3px] border-zinc-800 p-8 rounded-2xl shadow-lg w-96 text-sm'>
           <h1 className='text-zinc-800 text-2xl font-semibold text-center mb-4'>New Password</h1>
           <p className='text-center mb-6 text-indigo-700'>Enter new password below</p>
-          <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-zinc-600'>
+          <div className='mb-2 flex items-center gap-3 w-full px-5 py-2.5 bg-white rounded-full border-[2px] border-zinc-800'>
             <img src={assets.lock_icon} alt="" className='w-3 h-3' />
             <input type="password" placeholder='New Password'
-              className='w-full outline-none bg-zinc-600 text-white'
+              className='bg-transparent outline-none w-full text-black'
               value={newPassword}
-              onChange={e => setNewPassword(e.target.value)} required
+              onChange={e => {
+                setNewPassword(e.target.value);
+                setPasswordStrength(evalPasswordStrength(e.target.value));
+              }} required
             />
           </div>
+          
+          {newPassword && (
+              <p className={`text-sm mb-3 px-4  ${passwordStrength === 'Weak' ? 'text-red-500' :
+                passwordStrength === 'Medium' ? 'text-yellow-600' :
+                  'text-green-700'
+                }`}>
+                {passwordStrength}
+              </p>
+            )}
+
           <button className='w-full py-3 bg-gradient-to-br from-blue-600 via-purple-500 to-red-400 text-white rounded-full cursor-pointer hover:scale-105 transition-all duration-300'>
             {loading
               ? <DotWave
