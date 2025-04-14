@@ -1,16 +1,16 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 // import { assets } from '../src/assets/assets'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { IoIosArrowDown } from "react-icons/io";
-import { BsCheckCircleFill  } from "react-icons/bs";
+import { CheckCircle } from 'lucide-react';
 import { CiLogin } from "react-icons/ci";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { userData, backendUrl, setUserData, setIsLoggedin } = useContext(AppContext)
+  const { userData, backendUrl, setUserData, setIsLoggedin,getUserData } = useContext(AppContext)
 
   const sendVerificationOtp = async () => {
     try {
@@ -44,6 +44,10 @@ const Navbar = () => {
     }
   }
 
+  // useEffect(() => {
+  //   getUserData()
+  // },[])
+
 
 
   return (
@@ -53,10 +57,10 @@ const Navbar = () => {
         ? <div className='flex items-center gap-1 cursor-pointer'>
           <div className='bg-slate-800 text-white font-bold py-1 px-2.5 rounded-full relative group'>
             {userData.name[0].toUpperCase()}
-            <div className='absolute flex-col text-black font-medium text-md min-w-[147px] hidden group-hover:block top-0 -right-8 z-10 rounded pt-14'>
+            <div className='absolute flex-col text-black font-medium text-md min-w-[140px] hidden group-hover:block top-0 -right-8 z-10 rounded pt-14'>
               <ul className='bg-slate-300 rounded-md flex flex-col gap-1 justify-center'>
               <li className='cursor-pointer hover:bg-slate-400 px-3 py-1 rounded-tl-md rounded-tr-md' onClick={() => navigate('/profile')}>Profile</li>
-                {userData.isAccountVerified ? <li className='px-3 py-1 flex items-center gap-2'><span>Email Verified</span> <BsCheckCircleFill  className='text-green-600 font-bold'/></li> : <li onClick={sendVerificationOtp} className='cursor-pointer hover:bg-slate-400 px-3 py-1 '>Verify Email</li>}
+                {userData.isAccountVerified ? <li className='px-3 py-1 flex items-center justify-between'><span>Verified</span> <CheckCircle className="text-green-700 font-bold animate-pulse" size={20} /></li> : <li onClick={sendVerificationOtp} className='cursor-pointer hover:bg-slate-400 px-3 py-1 '>Verify Email</li>}
                 <li className='cursor-pointer hover:bg-slate-400 px-3 py-1' onClick={() => navigate('/reset-password')}>Reset Password</li>
                 <li className='cursor-pointer hover:bg-slate-400 px-3 py-1 rounded-bl-md rounded-br-md' onClick={logoutHandler}>Logout</li>
               </ul>
