@@ -61,7 +61,7 @@ const Profile = () => {
         } catch (error) {
             console.log(error.message)
             toast.error(error.message)
-            
+
         }
     }
 
@@ -121,7 +121,7 @@ const Profile = () => {
         <div className={`min-h-screen bg-[linear-gradient(to_bottom_right,_#f1f5f9,_#f3eaba,_#eaafd0,_#d8b4fe)] flex items-center justify-center p-4 `}>
             <h1 onClick={() => navigate('/')} className="absolute cursor-pointer top-5 left-8 self-center md:text-3xl text-center text-lg font-semibold whitespace-nowrap bg-gradient-to-br from-blue-600 via-purple-500 to-red-600 bg-clip-text text-transparent mb-2">oAuth</h1>
             {modelOpen && (
-                <div className="absolute top-1/2 text-black left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-[220px] bg-white flex flex-col gap-4 justify-center items-center rounded-lg z-10">
+                <div className="absolute top-1/2 text-black left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-[280px] bg-white flex flex-col gap-4 justify-center items-center rounded-lg z-10">
                     <p onClick={() => setModelOpen(!modelOpen)} className='absolute top-2 right-2 cursor-pointer'><RxCross1 className='font-bold text-2xl ' /></p>
                     <form onSubmit={updateProfile} className='flex flex-col gap-4 justify-center items-center'>
                         {/* <label className='flex flex-col'>
@@ -130,6 +130,10 @@ const Profile = () => {
                             </div>
                             <input onChange={(e) => setImage(e.target.files[0])} type="file" id='image' hidden />
                         </label> */}
+                        <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full border-[2px] border-zinc-800'>
+                            <img src={assets.mail_icon} alt="" />
+                            <input type="email" placeholder='Email' className='bg-transparent outline-none text-black' value={userData.email} />
+                        </div>
                         <div className='flex items-center gap-3 px-5 py-2.5 rounded-full border-[2px] border-zinc-800'>
                             <img src={assets.person_icon} alt="" className='w-3 h-3' />
                             <input type="text" className='bg-transparent outline-none text-black' placeholder='Edit Name' onChange={e => setName(e.target.value)} value={name} required />
