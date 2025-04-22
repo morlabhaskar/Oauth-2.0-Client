@@ -124,12 +124,6 @@ const Profile = () => {
                 <div className="absolute top-1/2 text-black left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-[280px] bg-white flex flex-col gap-4 justify-center items-center rounded-lg z-10">
                     <p onClick={() => setModelOpen(!modelOpen)} className='absolute top-2 right-2 cursor-pointer'><RxCross1 className='font-bold text-2xl ' /></p>
                     <form onSubmit={updateProfile} className='flex flex-col gap-4 justify-center items-center'>
-                        {/* <label className='flex flex-col'>
-                            <div className='cursor-pointer'>
-                                <img className='max-w-20 min-w-20 max-h-20 min-h-20 rounded-3xl absolute top-3 left-26 border-2 border-slate-600 opacity-100' src={image ? URL.createObjectURL(image) : userData.image} alt="" />
-                            </div>
-                            <input onChange={(e) => setImage(e.target.files[0])} type="file" id='image' hidden />
-                        </label> */}
                         <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full border-[2px] border-zinc-800'>
                             <img src={assets.mail_icon} alt="" />
                             <input type="email" placeholder='Email' className='bg-transparent outline-none text-black' value={userData.email} />
